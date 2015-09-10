@@ -1,0 +1,17 @@
+{
+  "name": "wechat",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "forever --harmony app.js"
+  },
+  "main": "app.js",
+  "dependencies": {
+    "koa": "~1.0.0",
+    "koa-router": "~5.1.2",
+    "koa-static": "~1.4.9",
+    "koa-views": "~3.1.0",
+    "dustjs-helpers": "~1.7.3",
+    "dustjs-linkedin": "~2.7.2"
+  }
+}
