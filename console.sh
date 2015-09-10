@@ -11,7 +11,7 @@ PID=/tmp/forever.pid
 
 case "$1" in
     start)
-        forever start -l $LOG/forever.log -o $LOG/forever_out.log -e $LOG/forever_err.log --pidFile $PID -a $DEAMON
+        forever start -l $LOG/forever.log -o $LOG/forever_out.log -e $LOG/forever_err.log --pidFile $PID -c "node --harmony" $DEAMON
         ;;
     stop)
         forever stop --pidFile $PID $DEAMON
