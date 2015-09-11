@@ -10,5 +10,7 @@ module.exports = function(app) {
 	router.get('/',home);
 	router.get('/token',token);
 
+	router.post('/token',token);
+
 	app.use(router.routes());
 };

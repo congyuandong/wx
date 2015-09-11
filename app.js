@@ -4,9 +4,15 @@ const koa = require('koa');
 const koastatic = require('koa-static');
 const view = require('koa-views'); // 模板解析
 const router = require('./biz/router');
+const parser = require('co-wechat-parser');
 
 const app = koa();
 const config = require('./conf').appConfig;
+
+app.use(parser.middleware({
+    key: 'wx',
+    camelcase: false
+}));
 
 /* error handler */
 app.use(function *errorHandler (next) {
