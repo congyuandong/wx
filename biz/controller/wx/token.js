@@ -2,7 +2,6 @@
 
 const config = require('../../../conf').appConfig;
 const crypto = require('crypto');
-const parse = require('co-body');
 const tools = require('../../tools')
 
 module.exports = function*() {
