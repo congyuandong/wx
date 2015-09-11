@@ -2,7 +2,8 @@
 
 const config = require('../../../conf').appConfig;
 const crypto = require('crypto');
-const tools = require('../../tools')
+const tools = require('../../tools');
+const parser = require('co-wechat-parser');
 
 module.exports = function*() {
 	if (this.method === 'GET') {
@@ -19,17 +20,17 @@ module.exports = function*() {
 			this.body = echostr;
 		}
 	} else if (this.method === 'POST') {
-		var body = this.request.wx;
+		var body = yield parser.parse(this.req);
 		//console.log(this.request.wx);
 		//var body = tools.parseMessage(this);
 		//var body = yield parse(this);
 		//console.log(body);
 		this.body = {
-			fromUserName: body.ToUserName,
-			FromUserName: body.FromUserName,
+			fromUserName: body.tousername,
+			FromUserName: body.fromusername,
 			MsgType: "text",
-			Content: body.Content,
-			CreateTime: body.CreateTime
+			Content: body.content,
+			CreateTime: body.createtime
 		};
 	}
 };
