@@ -4,21 +4,22 @@ const koa = require('koa');
 const koastatic = require('koa-static');
 const view = require('koa-views'); // 模板解析
 const router = require('./biz/router');
+const model = require('./biz/model');
 
 const app = koa();
 const config = require('./conf').appConfig;
 
 /* error handler */
-app.use(function *errorHandler (next) {
+app.use(function* errorHandler(next) {
 	try {
 		yield next;
-	} catch(e) {
+	} catch (e) {
 		// TODO 记录日志
 		console.error(e.stack);
-		if(config.env === 'dev') {
+		if (config.env === 'dev') {
 			console.error('error');
 			this.body = e.stack;
-		}else{
+		} else {
 			this.body = 'server error';
 		}
 	}
@@ -39,4 +40,10 @@ router(app);
 
 app.listen(config.port, function() {
 	console.log('server started on:', config.port);
+
+	//initialize Database
+	app.dbPool = model.dbConnection.createPool();
+
+	//initialize dbHandler dbPool
+	model.bizHandler.dbPoolInit(app);
 });

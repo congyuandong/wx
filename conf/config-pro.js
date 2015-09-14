@@ -3,11 +3,19 @@ module.exports = {
 	"port": 12000,
 
 	//db config
-	"dbHost":"rdss79ww4c8m44ep2rgq.mysql.rds.aliyuncs.com",
-	"dbPort":3306,
-	"dbDatabase":"wechat",
-	"dbUser":"aliyun_mysql",
-	"dbPassword":"aliyun_dbpwd",
+	dbPool: {
+        host : 'rdss79ww4c8m44ep2rgq.mysql.rds.aliyuncs.com',
+        port : 3306,
+        user : 'aliyun_mysql',
+        password : 'aliyun_dbpwd',
+        database : 'wechat',
+        debug : false,
+        waitForConnections : true,
+        connectionLimit : 10,
+        connectTimeout : 5000
+    },
 
-	"token":"congyuandong"
+	"token":"congyuandong",
+	"appid":"wx688beea849774414",
+	"secret":"77e11d7b461925cb7ec9ebf6de26446d"
 };

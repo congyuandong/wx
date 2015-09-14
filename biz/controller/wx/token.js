@@ -2,8 +2,12 @@
 
 const config = require('../../../conf').appConfig;
 const crypto = require('crypto');
-const tools = require('../../tools');
 const parser = require('co-wechat-parser');
+const ejs = require('ejs');
+const fs = require('fs');
+const tools = require('./tools');
+
+const messageTpl = fs.readFileSync(__dirname + '/message.ejs', 'utf-8');
 
 module.exports = function*() {
 	if (this.method === 'GET') {
@@ -21,16 +25,17 @@ module.exports = function*() {
 		}
 	} else if (this.method === 'POST') {
 		var body = yield parser.parse(this.req);
-		//console.log(this.request.wx);
-		//var body = tools.parseMessage(this);
-		//var body = yield parse(this);
-		//console.log(body);
-		this.body = {
+
+		var reply = {
+			toUserName: body.fromusername,
 			fromUserName: body.tousername,
-			FromUserName: body.fromusername,
-			MsgType: "text",
-			Content: body.content,
-			CreateTime: body.createtime
+			createTime: new Date().getTime()
 		};
+		var data = {
+			content: body.content,
+			msgType: 'text'
+		}
+		var result = ejs.render(messageTpl, tools.extend(reply, data));
+		this.body = result;
 	}
 };
