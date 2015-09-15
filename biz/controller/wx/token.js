@@ -31,8 +31,12 @@ module.exports = function*() {
 			fromUserName: body.tousername,
 			createTime: new Date().getTime()
 		};
+
+		var content = body.content;
+		var replay = yield tools.tuling(content);
+ 
 		var data = {
-			content: body.content,
+			content: replay,
 			msgType: 'text'
 		}
 		var result = ejs.render(messageTpl, tools.extend(reply, data));

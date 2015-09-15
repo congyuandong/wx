@@ -2,6 +2,9 @@
 
 const model = require('../../model');
 const moment = require('moment');
+const request = require('request');
+const thunkify = require('thunkify');
+const get = thunkify(request.get);
 
 /**
  * 获取access token如果超时则更新
@@ -43,4 +46,21 @@ exports.extend = function(obj, obj2) {
   }
 
   return obj;
+}
+
+/**
+ * 类扩展工具函数
+ *
+ * @param obj
+ * @param obj2
+ * @returns {*}
+ */
+exports.tuling = function*(content) {
+	var url = 'http://www.tuling123.com/openapi/api?key=330fab4b41219e4327e69c0280b9ec4c&info='+content;
+	var response = yield get(url);
+	response = JSON.parse(response[0].body);
+	if (response.code == 100000)
+		return response.text;
+	else 
+		return '主人休息去了，我也懒得理你了~';
 }
