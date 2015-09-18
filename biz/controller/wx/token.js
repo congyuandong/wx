@@ -33,7 +33,7 @@ module.exports = function*() {
 		};
 
 		var content = body.content;
-		var replay = yield tools.tuling(content);
+		var replay = yield tools.tuling(content, body.fromusername);
  
 		var data = {
 			content: replay,

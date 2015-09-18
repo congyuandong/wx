@@ -55,8 +55,8 @@ exports.extend = function(obj, obj2) {
  * @param obj2
  * @returns {*}
  */
-exports.tuling = function*(content) {
-	var url = 'http://www.tuling123.com/openapi/api?key=330fab4b41219e4327e69c0280b9ec4c&info='+content;
+exports.tuling = function*(content, userid) {
+	var url = 'http://www.tuling123.com/openapi/api?key=330fab4b41219e4327e69c0280b9ec4c&info='+content+'&userid='+userid;
 	var response = yield get(encodeURI(url));
 	response = JSON.parse(response[0].body);
 	if (response.code == 100000)
