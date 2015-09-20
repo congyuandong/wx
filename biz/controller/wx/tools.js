@@ -22,9 +22,21 @@ exports.getAccessToken = function*() {
 		yield model.bizHandler.initToken();
 	}
 	var tokenTime = moment(tokenObj.time);
-	console.log(moment().diff(tokenTime));
+	//console.log(moment().diff(tokenTime));
 	if (moment().diff(tokenTime) > tokenObj.expirs_in * 1000) {
-		return "需要更新token";
+		var url = 'https://api.weixin.qq.com/cgi-bin/token';
+		var data = {
+			'grant_type': 'client_credential',
+			'appid': config.appid,
+			'secret': config.secret
+		}
+		var response = yield urllib.requestThunk(url,{
+			method: 'GET',
+			data: data
+		});
+		response = JSON.parse(response.data);
+		yield model.bizHandler.updateToken(tokenObj.id, response.access_token, response.expires_in);
+		return response.access_token;
 	} else {
 		return tokenObj.access_token;
 	}
