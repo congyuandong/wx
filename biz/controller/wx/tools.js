@@ -1,10 +1,9 @@
 'use strict';
 
+const config = require('../../../conf').appConfig;
 const model = require('../../model');
 const moment = require('moment');
-const request = require('request');
-const thunkify = require('thunkify');
-const get = thunkify(request.get);
+const urllib = require('urllib');
 
 /**
  * 获取access token如果超时则更新
@@ -56,9 +55,17 @@ exports.extend = function(obj, obj2) {
  * @returns {*}
  */
 exports.tuling = function*(content, userid) {
-	var url = 'http://www.tuling123.com/openapi/api?key=330fab4b41219e4327e69c0280b9ec4c&info='+content+'&userid='+userid;
-	var response = yield get(encodeURI(url));
-	response = JSON.parse(response[0].body);
+	var url = 'http://www.tuling123.com/openapi/api';
+	var data = {
+		'key': config.tuling,
+		'info': content,
+		'userid': userid
+	}
+	var response = yield urllib.requestThunk(url,{
+		method: 'GET',
+		data: data
+	});
+	response = JSON.parse(response.data);
 	if (response.code == 100000)
 		return response.text;
 	else 
