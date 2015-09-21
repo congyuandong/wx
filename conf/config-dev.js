@@ -16,7 +16,7 @@ module.exports = {
     },
 
 	"token":"congyuandong",
-	"appid":"wx688beea849774414",
-	"secret":"77e11d7b461925cb7ec9ebf6de26446d",
+	"appid":"wx60eff8286e48acc0",
+	"secret":"6869fdb83594e48d00f8ebde8dd5be5d",
     "tuling":"330fab4b41219e4327e69c0280b9ec4c"
 };
